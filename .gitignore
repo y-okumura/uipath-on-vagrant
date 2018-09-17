@@ -1,4 +1,6 @@
 .vscode/
+work
+dest
 *.zip
 *.box
 .vagrant
