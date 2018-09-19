@@ -16,12 +16,12 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "dest/MSEdge - Win10.box"
   config.vm.guest = :windows
 
-  # winrm ã§ã¤ãªãå ´åˆã¯ã“ã‚“ãªæ„Ÿã˜ï¼Ÿ -> ã¤ãªãŒã‚‰ãªã‹ã£ãŸã®ã§sshã§
+  # winrm ‚Å‚Â‚È‚®ê‡‚Í‚±‚ñ‚ÈŠ´‚¶H -> ‚Â‚È‚ª‚ç‚È‚©‚Á‚½‚Ì‚Åssh‚Å
   # config.vm.communicator = "winrm"
   # config.winrm.username = 'IEUser'
   # config.winrm.password = 'Passw0rd!'
 
-  # sshã§ã¤ãªãå ´åˆã¯ã“ã‚“ãªæ„Ÿã˜
+  # ssh‚Å‚Â‚È‚®ê‡‚Í‚±‚ñ‚ÈŠ´‚¶
   config.ssh.username = 'IEUser'
   config.ssh.password = 'Passw0rd!'
   config.ssh.insert_key = false
@@ -77,12 +77,20 @@ Vagrant.configure("2") do |config|
      vb.memory = "2048"
      vb.cpus = 2
 
-    # åŒæ–¹å‘ã«ã‚³ãƒ”ãƒšå¯èƒ½ã«
+    # ‘o•ûŒü‚ÉƒRƒsƒy‰Â”\‚É
     vb.customize ["modifyvm", :id,
         "--clipboard", "bidirectional",
         "--draganddrop", "hosttoguest"
     ]
    end
+
+  config.vm.provider "hyperv" do |hyperv|
+    # gui option not supported. https://github.com/hashicorp/vagrant/issues/5777
+    # hyperv.gui = true
+  
+    # Customize the amount of memory on the VM:
+    hyperv.memory = "2048"
+  end
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
