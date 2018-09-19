@@ -3,3 +3,4 @@ work
 dest
 *.zip
 *.box
+.vagrant

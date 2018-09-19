@@ -1,5 +1,5 @@
-# https://developer.microsoft.com/ja-jp/windows/downloads/virtual-machines のダウンロードリンクのURL
-$imageUrl = "https://aka.ms/windev_VM_hyperv"
+# https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/ のダウンロードリンクのURL
+$imageUrl = "https://az792536.vo.msecnd.net/vms/VMBuild_20180425/HyperV/MSEdge/MSEdge.Win10.HyperV.zip"
 
 # 作業ルート。この配下にworkやdestフォルダを作って作業する
 $root = $PSScriptRoot
@@ -38,18 +38,18 @@ try {
         (New-Object IO.FileStream($boxZip, [IO.FileMode]::Create)),
         [IO.Compression.ZipArchiveMode]::Create)
     try {
-        # イメージファイルのトップディレクトリの中身を一階層上げてzip直下にコピー
-        $imageArchive.Entries | Where-Object {
-            -not $_.FullName.EndsWith('/')
-        } | ForEach-Object {
-            $newEntryPath = $_.FullName.Substring($_.FullName.indexOf('/') + 1)
-            $in = $_.Open()
-            $out = $boxArchive.CreateEntry($newEntryPath).Open()
-            try {
-                $in.CopyTo($out)
-            } finally {
-                $out.Close()
-                $in.Close()
+        # イメージファイルのトップディレクトリの中身をzip直下にコピー
+        $imageArchive.Entries | ForEach-Object {
+            $entry = $boxArchive.CreateEntry($_.FullName)
+            if (-not $_.FullName.EndsWith('/')) {
+                $in = $_.Open()
+                $out = $entry.Open()
+                try {
+                    $in.CopyTo($out)
+                } finally {
+                    $out.Close()
+                    $in.Close()
+                }
             }
         }
 
