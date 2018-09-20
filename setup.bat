@@ -1,4 +1,5 @@
 @powershell -ExecutionPolicy RemoteSigned -NoProfile -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
-cinst -y vagrant
+cinst -y vagrant virtualbox
 
-DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
+REM vagrant upの時だけでいいかも
+bcdedit /set hypervisorlaunchtype off
