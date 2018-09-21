@@ -14,6 +14,17 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "win10edge"
   config.vm.box_url = "dest/MSEdge - Win10.box"
+  config.vm.guest = :windows
+
+  # winrm でつなぐ場合はこんな感じ？ -> つながらなかったのでsshで
+  # config.vm.communicator = "winrm"
+  # config.winrm.username = 'IEUser'
+  # config.winrm.password = 'Passw0rd!'
+
+  # sshでつなぐ場合はこんな感じ
+  config.ssh.username = 'IEUser'
+  config.ssh.password = 'Passw0rd!'
+  config.ssh.insert_key = false
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
