@@ -73,11 +73,15 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
    config.vm.provider "virtualbox" do |vb|
-     # Display the VirtualBox GUI when booting the machine
      vb.gui = true
-
-     # Customize the amount of memory on the VM:
      vb.memory = "2048"
+     vb.cpus = 2
+
+    # 双方向にコピペ可能に
+    vb.customize ["modifyvm", :id,
+        "--clipboard", "bidirectional",
+        "--draganddrop", "hosttoguest"
+    ]
    end
 
   # Enable provisioning with a shell script. Additional provisioners such as
