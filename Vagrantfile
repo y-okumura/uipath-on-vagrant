@@ -12,7 +12,19 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "dest/MSEdge - Win10.box"
+  config.vm.box = "win10edge"
+  config.vm.box_url = "dest/MSEdge - Win10.box"
+  config.vm.guest = :windows
+
+  # winrm でつなぐ場合はこんな感じ？ -> つながらなかったのでsshで
+  # config.vm.communicator = "winrm"
+  # config.winrm.username = 'IEUser'
+  # config.winrm.password = 'Passw0rd!'
+
+  # sshでつなぐ場合はこんな感じ
+  config.ssh.username = 'IEUser'
+  config.ssh.password = 'Passw0rd!'
+  config.ssh.insert_key = false
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -44,6 +56,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder "setupvm", "/setup"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -60,11 +73,15 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
    config.vm.provider "virtualbox" do |vb|
-     # Display the VirtualBox GUI when booting the machine
      vb.gui = true
-  
-     # Customize the amount of memory on the VM:
      vb.memory = "2048"
+     vb.cpus = 2
+
+    # 双方向にコピペ可能に
+    vb.customize ["modifyvm", :id,
+        "--clipboard", "bidirectional",
+        "--draganddrop", "hosttoguest"
+    ]
    end
 
   # Enable provisioning with a shell script. Additional provisioners such as
@@ -74,4 +91,8 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+  config.vm.provision "shell",
+      privileged: false,
+      inline: <<-SHELL
+      SHELL
 end

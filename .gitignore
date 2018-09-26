@@ -2,3 +2,4 @@
 *.zip
 *.box
 .vagrant
+*.exe
