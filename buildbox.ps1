@@ -21,7 +21,7 @@ $imageZip = "$workDir\image.zip"
 if (-not (Test-Path $imageZip)) {
     mkdir $workDir
     # Invoke-WebRequestはスリープすると止まるがbitsadminは継続するので、大きなファイルはbitsadminが良さそう
-    bitsadmin.exe /Transfer getWindows10Image /Download $imageUrl $imageZip
+    bitsadmin.exe /Transfer getWindows10Image /Download /Priority FOREGROUND $imageUrl $imageZip
 }
 
 # fixme: mkdir -Forceで常に空で作ってほしいけど、すでに有るとなぜかそのままになってしまう

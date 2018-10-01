@@ -13,15 +13,21 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "win10edge"
-  config.vm.box_url = "dest/MSEdge - Win10.box"
+  
+  # hyper-v
+  config.vm.box = "dest/windows10.box"
+
+  # virtualbox
+  # config.vm.box_url = "dest/MSEdge - Win10.box"
+  
   config.vm.guest = :windows
 
-  # winrm ‚Å‚Â‚È‚®ê‡‚Í‚±‚ñ‚ÈŠ´‚¶H -> ‚Â‚È‚ª‚ç‚È‚©‚Á‚½‚Ì‚Åssh‚Å
+  # winrm ã§ã¤ãªãå ´åˆã¯ã“ã‚“ãªæ„Ÿã˜ï¼Ÿ -> ã¤ãªãŒã‚‰ãªã‹ã£ãŸã®ã§sshã§
   # config.vm.communicator = "winrm"
   # config.winrm.username = 'IEUser'
   # config.winrm.password = 'Passw0rd!'
 
-  # ssh‚Å‚Â‚È‚®ê‡‚Í‚±‚ñ‚ÈŠ´‚¶
+  # sshã§ã¤ãªãå ´åˆã¯ã“ã‚“ãªæ„Ÿã˜
   config.ssh.username = 'IEUser'
   config.ssh.password = 'Passw0rd!'
   config.ssh.insert_key = false
@@ -72,18 +78,18 @@ Vagrant.configure("2") do |config|
   #
   # View the documentation for the provider you are using for more
   # information on available options.
-   config.vm.provider "virtualbox" do |vb|
-     vb.gui = true
-     vb.memory = "2048"
-     vb.cpus = 2
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.memory = "2048"
+    vb.cpus = 2
 
-    # ‘o•ûŒü‚ÉƒRƒsƒy‰Â”\‚É
+    # åŒæ–¹å‘ã«ã‚³ãƒ”ãƒšå¯èƒ½ã«
     vb.customize ["modifyvm", :id,
         "--clipboard", "bidirectional",
         "--draganddrop", "hosttoguest"
     ]
-   end
-
+  end
+  
   config.vm.provider "hyperv" do |hyperv|
     # gui option not supported. https://github.com/hashicorp/vagrant/issues/5777
     # hyperv.gui = true
